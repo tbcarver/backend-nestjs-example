@@ -7,7 +7,7 @@
    "license": "UNLICENSED",
    "scripts": {
       "build": "nest build",
-      "start": "ts-node src/index.ts",
+      "start": "ts-node src/main.ts",
       "start:dev": "nest start --watch",
       "start:debug": "nest start --debug --watch",
       "start:prod": "node dist/main",
@@ -18,10 +18,10 @@
       "test:cov": "jest --coverage",
       "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
       "test:e2e": "jest --config ./test/jest-e2e.json",
-      "typeorm": "typeorm-ts-node-commonjs -d src/data-source.ts",
-      "db:create": "mkdir -p databases && ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create",
-      "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop",
-      "db:seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed"
+      "typeorm": "typeorm-ts-node-commonjs -d database/cli-data-source.ts",
+      "db:create": "mkdir -p database/sqlite && ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create -d database/cli-data-source.ts",
+      "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop -d database/cli-data-source.ts",
+      "db:seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -d database/cli-data-source.ts"
    },
    "dependencies": {
       "@nestjs/common": "^9.0.0",
@@ -35,8 +35,7 @@
       "pg": "^8.4.0",
       "reflect-metadata": "^0.1.13",
       "rxjs": "^7.2.0",
-      "typeorm": "0.3.11",
-      "typeorm-naming-strategies": "^4.1.0"
+      "typeorm": "0.3.11"
    },
    "devDependencies": {
       "@nestjs/cli": "^9.0.0",
