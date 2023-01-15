@@ -7,10 +7,14 @@
    "license": "UNLICENSED",
    "scripts": {
       "build": "nest build",
+      "db:create": "mkdir -p database/sqlite3 && npm run db:drop && ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create -d database/cli-data-source.ts",
+      "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop -d database/cli-data-source.ts",
+      "db:seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -d database/cli-data-source.ts",
       "start": "ts-node src/main.ts",
       "start:dev": "nest start --watch",
       "start:debug": "nest start --debug --watch",
       "start:prod": "node dist/main",
+      "sqlite3": "sqlite3 database/sqlite3/backend_nestjs_example.sqlite3",
       "lint": "eslint . --ext .js,.ts",
       "lint:fix": "eslint . --fix",
       "test": "jest",
@@ -18,10 +22,7 @@
       "test:cov": "jest --coverage",
       "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
       "test:e2e": "jest --config ./test/jest-e2e.json",
-      "typeorm": "typeorm-ts-node-commonjs -d database/cli-data-source.ts",
-      "db:create": "mkdir -p database/sqlite && ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create -d database/cli-data-source.ts",
-      "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop -d database/cli-data-source.ts",
-      "db:seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -d database/cli-data-source.ts"
+      "typeorm": "typeorm-ts-node-commonjs -d database/cli-data-source.ts"
    },
    "dependencies": {
       "@nestjs/common": "^9.0.0",
@@ -31,6 +32,7 @@
       "@nestjs/typeorm": "^9.0.1",
       "argon2": "^0.30.3",
       "better-sqlite3": "^8.0.1",
+      "class-transformer": "^0.5.1",
       "class-validator": "^0.14.0",
       "jsonwebtoken": "^9.0.0",
       "pg": "^8.4.0",

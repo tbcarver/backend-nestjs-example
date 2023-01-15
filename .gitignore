@@ -5,6 +5,6 @@ build/
 tmp/
 temp/
 dist/
-database/sqlite
+database/sqlite3
 
 .env

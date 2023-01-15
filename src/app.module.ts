@@ -12,7 +12,7 @@ import { DataSource } from 'typeorm';
     inject: [ConfigService],
     useFactory: () => ({
       type: 'better-sqlite3',
-      database: 'database/sqlite/backend_nestjs_example',
+      database: 'database/sqlite3/backend_nestjs_example.sqlite3',
       synchronize: true,
       logging: false,
       entities: ['dist/**/*.entity{.ts,.js}'],
