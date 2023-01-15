@@ -8,7 +8,7 @@ export class AuthService {
   private jwtSecret: string;
 
   constructor(private readonly configService: ConfigService) {
-    this.jwtSecret = this.configService.get<string>('jwt.secret');
+    this.jwtSecret = this.configService.get<string>('JWT_SECRET');
   }
 
   async hashPassword(password: string): Promise<string> {
