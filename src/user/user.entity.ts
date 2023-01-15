@@ -5,12 +5,16 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  firstName: string;
+  @Column({ unique: true })
+  username: string;
+
+  @Column({ unique: true })
+  email: string;
 
   @Column()
   password: string;
 
-  @Column()
-  age: number;
+  constructor(partialUser?: Partial<User>) {
+    partialUser && Object.assign(this, partialUser);
+  }
 }

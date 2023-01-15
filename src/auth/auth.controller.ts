@@ -3,8 +3,9 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
+import { RegisterUserDto } from './dto/register-user.dto';
 
-@Controller('users')
+@Controller('auth')
 export class AuthController {
   constructor(
     @InjectRepository(User)
@@ -13,15 +14,13 @@ export class AuthController {
   ) { }
 
   @Post('register')
-  async register(@Body() user: User) {
-    try {
-      user.password = await this.authService.hashPassword(user.password);
-
-      // persist the user to the database
-      const newUser = await this.userRepository.save(user);
-      return newUser;
-    } catch (err) {
-      throw new HttpException('User already exist', HttpStatus.CONFLICT);
-    }
+  async register(@Body() registerUserDto: RegisterUserDto) {
+    const password = await this.authService.hashPassword(registerUserDto.password);
+    const user = new User({ ...registerUserDto, password });
+    return await this.userRepository.save(user);
+    // try {
+    // } catch (err) {
+    //   throw new HttpException('User already exist', HttpStatus.CONFLICT);
+    // }
   }
 }
