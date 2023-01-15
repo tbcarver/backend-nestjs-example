@@ -17,10 +17,23 @@ export class AuthController {
   async register(@Body() registerUserDto: RegisterUserDto) {
     const password = await this.authService.hashPassword(registerUserDto.password);
     const user = new User({ ...registerUserDto, password });
+
+    let existingUser = await this.userRepository.findOneBy(
+      { username: registerUserDto.username },
+    );
+
+    if (existingUser) {
+      throw new HttpException('Username already in use.', HttpStatus.CONFLICT);
+    }
+
+    existingUser = await this.userRepository.findOneBy(
+      { email: registerUserDto.email },
+    );
+
+    if (existingUser) {
+      throw new HttpException('Email already in use.', HttpStatus.CONFLICT);
+    }
+
     return await this.userRepository.save(user);
-    // try {
-    // } catch (err) {
-    //   throw new HttpException('User already exist', HttpStatus.CONFLICT);
-    // }
   }
 }
