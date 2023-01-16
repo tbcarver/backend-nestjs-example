@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/register-user.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -35,5 +36,25 @@ export class AuthController {
     }
 
     return await this.userRepository.save(user);
+  }
+
+  @Post('login')
+  async login(@Body() loginDto: LoginDto) {
+
+    const user = await this.userRepository.findOneBy(
+      { username: loginDto.username },
+    );
+
+    if (!user) {
+      throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+    }
+
+    const isValid = await this.authService.validatePassword(user.password, loginDto.password);
+
+    if (!isValid) {
+      throw new HttpException('Invalid login.', HttpStatus.FORBIDDEN);
+    }
+
+    return this.authService.createJwt(user);
   }
 }
