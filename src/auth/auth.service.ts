@@ -21,8 +21,8 @@ export class AuthService {
     return argon2.verify(hash, password);
   }
 
-  async createJwt(user: User): Promise<{ access_token: string }> {
+  async createJwt(user: User): Promise<{ token: string }> {
     const payload = { sub: user.id, username: user.username };
-    return { access_token: this.jwtService.sign(payload) };
+    return { token: this.jwtService.sign(payload) };
   }
 }

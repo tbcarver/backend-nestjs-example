@@ -35,7 +35,8 @@ export class AuthController {
       throw new HttpException('Email already in use.', HttpStatus.CONFLICT);
     }
 
-    return await this.userRepository.save(user);
+    await this.userRepository.save(user);
+    return { message: 'User created succesfully.' };
   }
 
   @Post('login')
