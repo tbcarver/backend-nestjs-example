@@ -8,7 +8,7 @@ export default new DataSource({
   database: process.env.DB_PATH,
   synchronize: true,
   logging: false,
-  entities: ['dist/**/*.entity{.ts,.js}'],
+  entities: ['src/**/*.entity.ts'],
   migrations: ['database/migrations/*.ts'],
   subscribers: [],
 });
